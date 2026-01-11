@@ -8,7 +8,7 @@ module.exports = {
     creator: "Acedia QOLs",
     donate: "https://ko-fi.com/slothyacedia",
   },
-  category: "Shortcuts",
+  category: "Roles",
   modules: [],
   UI: [
     {
