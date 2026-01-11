@@ -44,8 +44,13 @@ module.exports = {
   async run(values, message, client, bridge) {
     let roleList = bridge.get(values.rolesList)
 
+    let idRegex = /^[0-9]+$/
     roleList = roleList.map((role) => {
-      return `<@&${role.id}>`
+      if (idRegex.test(role) == true) {
+        return `<@&${role}>`
+      } else if (role?.id) {
+        return `<@&${role.id}>`
+      }
     })
 
     let styleType = bridge.transf(values.style.type)
