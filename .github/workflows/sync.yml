@@ -45,8 +45,9 @@ jobs:
             MSG="${MSG:-Sync from ace-bmods}"
 
             git add .
-            git commit -m "Sync from source: ${MSG}"
+            git commit -m "Sync: ${MSG}"
             git push
           else
             echo "No changes to sync"
           fi
+
