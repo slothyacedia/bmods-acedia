@@ -66,7 +66,7 @@ module.exports = {
 
     let fullPath = path.join(path.normalize(projectFolder), pathToJson)
     if (!fs.existsSync(fullPath)) {
-      return console.error(`File ${fullPath} Doesn't Exist!`)
+      return console.error(`[${this.data.name}] File ${fullPath} Doesn't Exist!`)
     }
 
     const originalFileContent = fs.readFileSync(fullPath, "utf8")
@@ -74,7 +74,7 @@ module.exports = {
     try {
       jsonObject = JSON.parse(originalFileContent)
     } catch (err) {
-      return console.error(`Invalid Original JSON Content: ${err.message}`)
+      return console.error(`[${this.data.name}] Invalid Original JSON Content: ${err.message}`)
       jsonObject = {}
     }
 
@@ -87,7 +87,7 @@ module.exports = {
       }
 
       if (elementPath === "" || elementPath.startsWith(".") || elementPath.endsWith(".")) {
-        console.error(`Invalid Path: "${elementPath}"`)
+        console.error(`[${this.data.name}] Invalid Path: "${elementPath}"`)
         return
       }
 
@@ -105,7 +105,7 @@ module.exports = {
           }
         }
       } catch (err) {
-        return console.error(`Failed To Parse Path "${elementPath}": ${err.message}`)
+        return console.error(`[${this.data.name}] Failed To Parse Path "${elementPath}": ${err.message}`)
       }
     }
 

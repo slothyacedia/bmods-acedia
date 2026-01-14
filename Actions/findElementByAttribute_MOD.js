@@ -82,7 +82,7 @@ module.exports = {
 
     let inputData = bridge.get(values.inputData)
     if (isJSON(inputData) == false) {
-      console.error(`The Input Data Is Malformed`)
+      console.error(`[${this.data.name}] The Input Data Is Malformed`)
       return
     }
 
@@ -95,7 +95,7 @@ module.exports = {
       }
 
       if (parentPath === "" || parentPath.startsWith(".") || parentPath.endsWith(".")) {
-        console.error(`Invalid Path: ${values.elementAccessor}`)
+        console.error(`[${this.data.name}] Invalid Path: ${values.elementAccessor}`)
         return
       }
 
@@ -113,13 +113,13 @@ module.exports = {
           }
         }
       } catch {
-        console.error(`Failed To Parse Path "${values.elementAccessor}"`)
+        console.error(`[${this.data.name}] Failed To Parse Path "${values.elementAccessor}"`)
         return
       }
     }
 
     if (dataElement == undefined) {
-      console.error(`The Element ${values.elementAccessor} Is Undefined`)
+      console.error(`[${this.data.name}] The Element ${values.elementAccessor} Is Undefined`)
       return
     }
 
@@ -135,7 +135,7 @@ module.exports = {
     let foundElement = undefined
 
     if (typeof dataElement !== "object" || Array.isArray(dataElement) || dataElement === null) {
-      console.error(`Target At "${values.elementAccessor || "Root"}" Is Not A JSON Object`)
+      console.error(`[${this.data.name}] Target At "${values.elementAccessor || "Root"}" Is Not A JSON Object`)
       return
     }
 

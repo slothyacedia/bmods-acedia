@@ -158,7 +158,7 @@ module.exports = {
 
     if (isJSON(original) !== true) {
       bridge.store(values.modified, original)
-      console.error(`Value ${original} Is Not A Valid JSON`)
+      console.error(`[${this.data.name}] Value ${original} Is Not A Valid JSON`)
       return
     }
 
@@ -176,7 +176,7 @@ module.exports = {
       }
 
       if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-        return console.error(`Invalid Path: "${bridge.transf(values.jsonAction.values)}"`)
+        return console.error(`[${this.data.name}] Invalid Path: "${bridge.transf(values.jsonAction.values)}"`)
       }
 
       let keys = objectPath.split(".")
@@ -201,7 +201,7 @@ module.exports = {
         try {
           parsedContent = JSON.parse(rawContent)
         } catch (err) {
-          return console.error(`Invalid JSON For Content: ${err.message}`)
+          return console.error(`[${this.data.name}] Invalid JSON For Content: ${err.message}`)
         }
       }
 

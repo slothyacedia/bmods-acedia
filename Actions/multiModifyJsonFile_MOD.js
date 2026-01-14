@@ -180,7 +180,7 @@ module.exports = {
       path.normalize("schedules"),
     ]
     if (forbiddenFiles.some((fp) => fullPath.endsWith(fp))) {
-      return console.error(`Essential Files Are Not To Be Messed With!!`)
+      return console.error(`[${this.data.name}] Essential Files Are Not To Be Messed With!!`)
     }
     if (!fs.existsSync(fullPath)) {
       if (values.createIfMissing === true) {
@@ -191,7 +191,7 @@ module.exports = {
 
         fs.writeFileSync(fullPath, JSON.stringify({}, null))
       } else {
-        return console.error(`File ${fullPath} Doesn't Exist!`)
+        return console.error(`[${this.data.name}] File ${fullPath} Doesn't Exist!`)
       }
     }
 
@@ -237,7 +237,7 @@ module.exports = {
     }
 
     if (isJSON(jsonObject) === false) {
-      console.error(`Content Inside ${fullPath} Is Not Valid JSON!`)
+      console.error(`[${this.data.name}] Content Inside ${fullPath} Is Not Valid JSON!`)
       return
     }
 
@@ -260,7 +260,7 @@ module.exports = {
       }
 
       if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-        return console.error(`Invalid Path: "${objectPath}"`)
+        return console.error(`[${this.data.name}] Invalid Path: "${objectPath}"`)
       }
 
       const keys = objectPath.split(".")
@@ -279,7 +279,7 @@ module.exports = {
         try {
           parsedContent = JSON.parse(rawContent)
         } catch (err) {
-          return console.error(`Invalid JSON For Content: ${err.message}`)
+          return console.error(`[${this.data.name}] Invalid JSON For Content: ${err.message}`)
         }
       }
 

@@ -73,7 +73,7 @@ module.exports = {
     }
 
     if (isJSON(original) !== true) {
-      console.error(`Value ${original} Is Not A Valid JSON`)
+      console.error(`[${this.data.name}] Value ${original} Is Not A Valid JSON`)
       return
     }
 
@@ -88,7 +88,7 @@ module.exports = {
       }
 
       if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-        console.error(`Invalid Path: "${objectPath}"`)
+        console.error(`[${this.data.name}] Invalid Path: "${objectPath}"`)
         continue
       }
 
