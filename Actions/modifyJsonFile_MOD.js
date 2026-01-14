@@ -230,12 +230,12 @@ module.exports = {
       rawContent = `"${rawContent.replace(/^["']|["']$/g, "").replace(/"/g, '\\"')}"`
     }
 
-    objectPath = objectPath.replaceAll("..", ".")
+    objectPath = objectPath.replaceAll(/\.{2,}/g, ".")
     if (objectPath.startsWith(".")) {
       objectPath = objectPath.slice(1)
     }
 
-    if (objectPath === "" || objectPath.includes("..") || objectPath.startsWith(".") || objectPath.endsWith(".")) {
+    if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
       return console.error(`Invalid path: "${bridge.transf(values.jsonAction.values)}"`)
     }
 

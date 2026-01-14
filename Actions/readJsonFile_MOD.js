@@ -81,12 +81,12 @@ module.exports = {
     let finalResult = jsonObject
     if (values.pathToElement) {
       let elementPath = bridge.transf(values.pathToElement).trim()
-      elementPath = elementPath.replaceAll("..", ".")
+      elementPath = elementPath.replaceAll(/\.{2,}/g, ".")
       if (elementPath.startsWith(`.`)) {
         elementPath = elementPath.slice(1)
       }
 
-      if (elementPath === "" || elementPath.includes("..") || elementPath.startsWith(".") || elementPath.endsWith(".")) {
+      if (elementPath === "" || elementPath.startsWith(".") || elementPath.endsWith(".")) {
         console.error(`Invalid path: "${elementPath}"`)
         return
       }

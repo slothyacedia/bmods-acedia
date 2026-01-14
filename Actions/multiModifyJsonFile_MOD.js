@@ -249,7 +249,7 @@ module.exports = {
       let objectPath = bridge.transf(modificationData.jsonAction.value).trim()
       let rawContent = bridge.transf(modificationData.content)
 
-      objectPath = objectPath.replaceAll("..", ".")
+      objectPath = objectPath.replaceAll(/\.{2,}/g, ".")
       if (objectPath.startsWith(".")) {
         objectPath = objectPath.slice(1)
       }
@@ -259,7 +259,7 @@ module.exports = {
         rawContent = `"${rawContent.replace(/^["']|["']$/g, "").replace(/"/g, '\\"')}"`
       }
 
-      if (objectPath === "" || objectPath.includes("..") || objectPath.startsWith(".") || objectPath.endsWith(".")) {
+      if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
         return console.error(`Invalid path: "${objectPath}"`)
       }
 

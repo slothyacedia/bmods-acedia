@@ -82,12 +82,12 @@ module.exports = {
 
       let objectPath = bridge.transf(pathData.elementPath).trim()
 
-      objectPath = objectPath.replaceAll("..", ".")
+      objectPath = objectPath.replaceAll(/\.{2,}/g, ".")
       if (objectPath.startsWith(".")) {
         objectPath = objectPath.slice(1)
       }
 
-      if (objectPath === "" || objectPath.includes("..") || objectPath.startsWith(".") || objectPath.endsWith(".")) {
+      if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
         console.error(`Invalid path: "${objectPath}"`)
         continue
       }

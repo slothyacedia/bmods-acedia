@@ -105,12 +105,12 @@ module.exports = {
     let dataElement = inputData
     if (values.elementAccessor) {
       let parentPath = bridge.transf(values.elementAccessor).trim()
-      parentPath = parentPath.replaceAll("..", ".")
+      parentPath = parentPath.replaceAll(/\.{2,}/g, ".")
       if (parentPath.startsWith(".")) {
         parentPath = parentPath.slice(1)
       }
 
-      if (parentPath === "" || parentPath.includes("..") || parentPath.startsWith(".") || parentPath.endsWith(".")) {
+      if (parentPath === "" || parentPath.startsWith(".") || parentPath.endsWith(".")) {
         console.error(`Invalid Path: ${values.elementAccessor}`)
         return
       }
