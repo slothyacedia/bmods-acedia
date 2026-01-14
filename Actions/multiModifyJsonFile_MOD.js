@@ -260,7 +260,7 @@ module.exports = {
       }
 
       if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-        return console.error(`Invalid path: "${objectPath}"`)
+        return console.error(`Invalid Path: "${objectPath}"`)
       }
 
       const keys = objectPath.split(".")
@@ -279,7 +279,7 @@ module.exports = {
         try {
           parsedContent = JSON.parse(rawContent)
         } catch (err) {
-          return console.error(`Invalid JSON for content: ${err.message}`)
+          return console.error(`Invalid JSON For Content: ${err.message}`)
         }
       }
 

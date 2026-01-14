@@ -235,8 +235,9 @@ module.exports = {
       objectPath = objectPath.slice(1)
     }
 
-    if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-      return console.error(`Invalid path: "${bridge.transf(values.jsonAction.values)}"`)
+    let isRoot = objectPath === ""
+    if (!isRoot || objectPath.startsWith(".") || objectPath.endsWith(".")) {
+      return console.error(`Invalid Path: "${bridge.transf(values.jsonAction.values)}"`)
     }
 
     const keys = objectPath.split(".")

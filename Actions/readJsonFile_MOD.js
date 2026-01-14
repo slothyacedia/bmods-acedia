@@ -87,7 +87,7 @@ module.exports = {
       }
 
       if (elementPath === "" || elementPath.startsWith(".") || elementPath.endsWith(".")) {
-        console.error(`Invalid path: "${elementPath}"`)
+        console.error(`Invalid Path: "${elementPath}"`)
         return
       }
 

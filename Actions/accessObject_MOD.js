@@ -88,7 +88,7 @@ module.exports = {
       }
 
       if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-        console.error(`Invalid path: "${objectPath}"`)
+        console.error(`Invalid Path: "${objectPath}"`)
         continue
       }
 

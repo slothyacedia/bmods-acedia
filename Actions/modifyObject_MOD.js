@@ -176,7 +176,7 @@ module.exports = {
       }
 
       if (objectPath === "" || objectPath.startsWith(".") || objectPath.endsWith(".")) {
-        return console.error(`Invalid path: "${bridge.transf(values.jsonAction.values)}"`)
+        return console.error(`Invalid Path: "${bridge.transf(values.jsonAction.values)}"`)
       }
 
       let keys = objectPath.split(".")
@@ -201,7 +201,7 @@ module.exports = {
         try {
           parsedContent = JSON.parse(rawContent)
         } catch (err) {
-          return console.error(`Invalid JSON for content: ${err.message}`)
+          return console.error(`Invalid JSON For Content: ${err.message}`)
         }
       }
 
