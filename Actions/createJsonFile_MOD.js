@@ -1,4 +1,4 @@
-modVersion = "v1.1.4"
+modVersion = "v1.2.4"
 
 module.exports = {
   data: {

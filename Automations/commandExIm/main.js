@@ -1,4 +1,4 @@
-modVersion = "v1.2.2"
+modVersion = "v1.2.3"
 module.exports = {
   run: async (options) => {
     const fs = require("node:fs")

@@ -1,4 +1,4 @@
-modVersion = "v1.1.5"
+modVersion = "v1.2.5"
 module.exports = {
   data: {
     name: "Modify JSON File",

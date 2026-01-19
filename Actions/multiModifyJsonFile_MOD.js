@@ -1,4 +1,4 @@
-modVersion = "v1.1.3"
+modVersion = "v1.2.3"
 module.exports = {
   data: {
     name: "Multi Modify JSON File",
