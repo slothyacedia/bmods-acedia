@@ -18,7 +18,7 @@ jobs:
 
       - name: Clone source repo
         run: |
-          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/slothyace/ace-bmods.git /tmp/ace-bmods
+          git clone https://x-access-token:${{ secrets.syncToken }}@github.com/slothyace/ace-bmods.git /tmp/ace-bmods
 
       - name: Sync files (with exclusions)
         run: |
@@ -50,5 +50,6 @@ jobs:
           else
             echo "No changes to sync"
           fi
+
 
 
