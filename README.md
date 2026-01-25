@@ -10,7 +10,7 @@ A dedicated repository for my modded actions for [BMD](https://store.steampowere
 
 ## Installation
 
-[![Watch Installion Guide](https://i.ytimg.com/an_webp/qTTGdbSt9yg/mqdefault_6s.webp?du=3000&sqp=CLCQxssG&rs=AOn4CLBm7z9u0vkbts2yrwv3CEgrPrmmiw)](https://www.youtube.com/watch?v=qTTGdbSt9yg)
+[![Watch Installion Guide](https://i.ytimg.com/an_webp/qTTGdbSt9yg/mqdefault_6s.webp)](https://www.youtube.com/watch?v=qTTGdbSt9yg)
 
 ## Worded Installation Guide
 
