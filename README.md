@@ -1,12 +1,13 @@
 # bmods-ace
 
-A dedicated repository for my modded actions for [BMD](https://store.steampowered.com/app/2592170/Bot_Maker_For_Discord/).
+A dedicated private repository for my modded actions for [BMD](https://store.steampowered.com/app/2592170/Bot_Maker_For_Discord/).
 
 ## Contains
 
-1. Modded actions
-2. QOL Fixes
-3. Fixes for some of the base actions
+1. Modded Actions
+2. Modded Events
+3. Automations
+4. Fixes For Some Of The Base Actions
 
 ## Installation
 
