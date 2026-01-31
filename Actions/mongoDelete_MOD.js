@@ -44,7 +44,7 @@ module.exports = {
         attribute: {
           data: {},
           name: "Attribute",
-          preview: "`${option.data.attributeKey}: ${option.data.attributeValue}`",
+          preview: "`${option.data.attributeKey}: ${option.data.attributeValue.type}(${option.data.attributeValue.value})`",
           UI: [
             {
               element: "input",
