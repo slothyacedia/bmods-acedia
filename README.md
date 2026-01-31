@@ -2,6 +2,8 @@
 
 A dedicated private repository for my modded actions for [BMD](https://store.steampowered.com/app/2592170/Bot_Maker_For_Discord/).
 
+Note: This Repo Is Auto Managed By GitHub Actions, It Ports Certain Folders From A Private Development Repo.
+
 ## Contains
 
 1. Modded Actions
