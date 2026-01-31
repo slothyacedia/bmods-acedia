@@ -1,4 +1,4 @@
-modVersion = "v1.0.0"
+modVersion = "v1.1.0"
 module.exports = {
   data: {
     name: "MongoDB Query Collection",
