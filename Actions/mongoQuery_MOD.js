@@ -77,7 +77,7 @@ module.exports = {
           "_",
           {
             element: "text",
-            text: `Select "Single" And It'll Return The latest Entry`,
+            text: `Select "Single" And It'll Return The Latest Entry`,
           },
           {
             element: "text",
