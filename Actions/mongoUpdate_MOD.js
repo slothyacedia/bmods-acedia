@@ -52,9 +52,16 @@ module.exports = {
               placeholder: "dot.notation.supported",
             },
             {
-              element: "input",
+              element: "typedDropdown",
               storeAs: "attributeValue",
               name: "Equals",
+              choices: {
+                text: { name: "Text", field: true },
+                number: { name: "Number", field: true },
+                boolean: { name: "Boolean (true / false)", field: true },
+                regex: { name: "Regex", field: true },
+                objectId: { name: "_id", field: true },
+              },
             },
           ],
         },
@@ -159,7 +166,7 @@ module.exports = {
         () => {
           values.updateUI()
         },
-        skipAnimation ? 1 : values.commonAnimation * 100
+        skipAnimation ? 1 : values.commonAnimation * 100,
       )
     }
 
@@ -199,10 +206,53 @@ module.exports = {
     for (let attribute of values.attributes) {
       let attributeData = attribute.data
       let attributeKey = bridge.transf(attributeData.attributeKey)
-      let attributeValue = bridge.transf(attributeData.attributeValue)
-      if (attributeKey === "_id") {
-        attributeValue = new mongodb.ObjectId(attributeValue)
+      let attributeValue = bridge.transf(attributeData.attributeValue.value)
+      let attributeValueType = bridge.transf(attributeData.attributeValue.type)
+      switch (attributeValueType) {
+        case "text": {
+          break
+        }
+
+        case "number": {
+          if (!isNaN(Number(attributeValue))) {
+            attributeValue = Number(attributeValue)
+          } else {
+            console.log(`[${this.data.name}] ${attributeValue} Is Not A Number`)
+          }
+          break
+        }
+
+        case "boolean": {
+          if (typeof attributeValue === "boolean") {
+          } else if (/^(true|false)$/i.test(attributeValue)) {
+            attributeValue = attributeValue.toLowerCase() === "true"
+          } else {
+            console.log(`[${this.data.name}] ${attributeValue} Is Not A Boolean`)
+          }
+          break
+        }
+
+        case "regex": {
+          try {
+            attributeValue = new RegExp(attributeValue, "i")
+          } catch (err) {
+            console.log(`[${this.data.name}] Invalid Regex: ${err.message}`)
+            attributeValue = bridge.transf(attributeData.attributeValue.value)
+          }
+          break
+        }
+
+        case "objectId": {
+          try {
+            attributeValue = new mongodb.ObjectId(attributeValue)
+          } catch (err) {
+            console.log(`[${this.data.name}] ${attributeValue}; ${err.message}`)
+            attributeValue = bridge.transf(attributeData.attributeValue.value)
+          }
+          break
+        }
       }
+
       attributes[attributeKey] = attributeValue
     }
     let $set = {}
