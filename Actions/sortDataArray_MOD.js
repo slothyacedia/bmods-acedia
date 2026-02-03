@@ -85,6 +85,7 @@ module.exports = {
     }
     let attributePathParts = attributePath.split(".")
     let sortType = bridge.transf(values.sortType.type)
+    let defaultValue = bridge.transf(values.defaultValue)
 
     let entries = bridge.get(values.dataArray)
     if (!entries || !Array.isArray(entries)) {
@@ -107,10 +108,10 @@ module.exports = {
       }
 
       if (valA === undefined) {
-        valA = bridge.transf(values.defaultValue)
+        valA = defaultValue
       }
       if (valB === undefined) {
-        valB = bridge.transf(values.defaultValue)
+        valB = defaultValue
       }
 
       switch (sortType) {
