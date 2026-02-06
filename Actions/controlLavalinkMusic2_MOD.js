@@ -32,7 +32,7 @@ module.exports = {
         resume: { name: "Resume Music", field: false },
         stop: { name: "Stop Music Playback", field: false },
         destroy: { name: "Destroy Player", field: false },
-        reconnect: { name: "Reconnect Player (Destroy & Recreate)", field: false },
+        connect: { name: "Connect Player (Refresh Connection)", field: false },
         volume: { name: "Set Volume", field: true },
         skip: { name: "Skip Current Track", field: false },
         skipTo: { name: "Skip To Track #", field: true, placeholder: "#" },
@@ -226,12 +226,7 @@ module.exports = {
         break
       }
 
-      case "reconnect": {
-        let playerInfo = player
-        await player.destroy()
-        player = client.lavalink.createPlayer({
-          ...playerInfo,
-        })
+      case "connect": {
         await player.connect()
         break
       }
