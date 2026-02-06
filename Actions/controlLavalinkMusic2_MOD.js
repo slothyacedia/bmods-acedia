@@ -32,6 +32,7 @@ module.exports = {
         resume: { name: "Resume Music", field: false },
         stop: { name: "Stop Music Playback", field: false },
         destroy: { name: "Destroy Player", field: false },
+        reconnect: { name: "Reconnect Player (Destroy & Recreate)", field: false },
         volume: { name: "Set Volume", field: true },
         skip: { name: "Skip Current Track", field: false },
         skipTo: { name: "Skip To Track #", field: true, placeholder: "#" },
@@ -139,14 +140,13 @@ module.exports = {
     for (const moduleName of this.modules) {
       await client.getMods().require(moduleName)
     }
-
-    const player = client.lavalink.getPlayer(bridge.guild.id)
+    let actionType = bridge.transf(values.action.type)
+    let player = client.lavalink.getPlayer(bridge.guild.id)
 
     if (!player) {
       return console.error(`[${this.data.name}] Player Not Found`)
     }
 
-    let actionType = bridge.transf(values.action.type)
     switch (actionType) {
       case "skip": {
         if (player.queue.tracks.length == 0) {
@@ -224,6 +224,14 @@ module.exports = {
       case "destroy": {
         await player.destroy()
         break
+      }
+
+      case "reconnect": {
+        let playerInfo = player
+        await player.destroy()
+        player = client.lavalink.createPlayer({
+          ...playerInfo,
+        })
       }
 
       default: {
