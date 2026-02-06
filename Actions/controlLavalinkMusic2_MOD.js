@@ -232,6 +232,7 @@ module.exports = {
         player = client.lavalink.createPlayer({
           ...playerInfo,
         })
+        break
       }
 
       default: {
