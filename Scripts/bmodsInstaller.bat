@@ -7,6 +7,8 @@ set "gameFolderName=Bot Maker For Discord"
 set "exeName=Bot Maker For Discord.exe"
 set "zipName=bmods.zip"
 set "extractedDir=bmods-master"
+set "wget=0"
+set "winget=0"
 
 echo Starting bmods Installer...
 echo Detecting Steam Installation...
@@ -56,6 +58,45 @@ pause
 exit /b 1
 
 :found
+echo Checking For wget...
+wget --version >nul 2>&1
+if !ERRORLEVEL! equ 0 (
+  echo wget Detected
+  set "wget=1"
+) else (
+  echo wget Missing
+  set "wget=0"
+)
+
+if !wget! equ 0 (
+  echo Checking For winget...
+  winget -v >nul 2>&1
+  if !ERRORLEVEL! equ 0 (
+      echo winget Detected, Installing Missing Packages...
+      set "winget=1"
+      echo.
+  ) else (
+      echo winget Not Found...
+      echo Please Install The Microsoft App Installer From The Store:
+      echo https://aka.ms/getwinget
+      echo Or Download Manually From GitHub:
+      echo https://github.com/microsoft/winget-cli/releases
+      pause
+      exit /b 1
+  )
+
+  if !winget! equ 1 (
+    echo Installing wget...
+    winget install JernejSimoncic.Wget --accept-package-agreements --accept-source-agreements
+    echo wget Installed
+  )
+
+  echo Installations Complete, Relaunching Script In New CMD Window...
+  timeout /t 1 /nobreak >nul
+  start "" cmd /c "%~f0"
+  exit /b 0
+)
+
 echo Installing bmods To: "%installDir%"
 timeout /t 1 >nul
 
