@@ -1,4 +1,4 @@
-modVersion = "v1.0.0"
+modVersion = "v1.0.1"
 module.exports = {
   data: {
     name: "Search Lavalink Music",
@@ -82,12 +82,12 @@ module.exports = {
           query,
           source: "ytsearch",
         },
-        message.author || message.user
+        message.author || message.user,
       )
 
       if (!result || !result.tracks || result.tracks.length === 0) {
         console.log(`[${this.data.name}] No Tracks Found For The Query:`, query)
-        return bridge.runner(values.ifError, values.ifErrorActions)
+        return bridge.call(values.ifError, values.ifErrorActions)
       }
 
       bridge.store(values.store, result)
@@ -95,7 +95,7 @@ module.exports = {
       bridge.store(values.storeTracks, result.tracks)
     } catch (error) {
       console.log(`[${this.data.name}] Lavalink Music Error`, error)
-      bridge.runner(values.ifError, values.ifErrorActions)
+      bridge.call(values.ifError, values.ifErrorActions)
     }
   },
 }

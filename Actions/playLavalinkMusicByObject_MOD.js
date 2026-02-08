@@ -1,4 +1,4 @@
-modVersion = "v1.0.0"
+modVersion = "v1.0.1"
 module.exports = {
   data: {
     name: "Play Lavalink Music Via Track Object",
@@ -61,12 +61,12 @@ module.exports = {
 
     if (!voiceChannel) {
       console.log(`[${this.data.name}] Voice Channel Not Found Or Not Specified.`)
-      return bridge.runner(values.ifError, values.ifErrorActions)
+      return bridge.call(values.ifError, values.ifErrorActions)
     }
 
     if (!client.lavalink.nodeManager.nodes.size) {
       console.log(`No Lavalink Connection Found, Please Connect First.`)
-      return bridge.runner(values.ifError, values.ifErrorActions)
+      return bridge.call(values.ifError, values.ifErrorActions)
     }
 
     try {
@@ -99,7 +99,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(`[${this.data.name}] Lavalink Music Error`, error)
-      bridge.runner(values.ifError, values.ifErrorActions)
+      bridge.call(values.ifError, values.ifErrorActions)
     }
   },
 }
