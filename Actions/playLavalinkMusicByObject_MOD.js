@@ -1,4 +1,4 @@
-modVersion = "v1.0.1"
+modVersion = "v1.1.1"
 module.exports = {
   data: {
     name: "Play Lavalink Music Via Track Object",
@@ -71,6 +71,24 @@ module.exports = {
       return
     }
 
+    let node
+    if (client.lavalink.bmdManager) {
+      function getHealthyNode(client) {
+        const nodes = [...client.lavalink.bmdManager.states.active.values()].filter((n) => n.connected)
+
+        if (!nodes.length) return null
+
+        return nodes.sort((a, b) => a.stats.playingPlayers - b.stats.playingPlayers)[0]
+      }
+
+      node = getHealthyNode(client)
+      if (!node) {
+        console.log(`[${this.data.name}] No Healthy Lavalink Nodes Found.`)
+        await bridge.runner(values.ifError, values.ifErrorActions)
+        return
+      }
+    }
+
     try {
       let player = client.lavalink.getPlayer(bridge.guild.id)
 
@@ -81,6 +99,7 @@ module.exports = {
           textChannelId: message.channel.id,
           selfDeaf: values.selfDeaf,
           selfMute: false,
+          node,
         })
       }
 
