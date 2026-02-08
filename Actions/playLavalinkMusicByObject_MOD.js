@@ -61,12 +61,14 @@ module.exports = {
 
     if (!voiceChannel) {
       console.log(`[${this.data.name}] Voice Channel Not Found Or Not Specified.`)
-      return bridge.call(values.ifError, values.ifErrorActions)
+      await bridge.call(values.ifError, values.ifErrorActions)
+      return
     }
 
     if (!client.lavalink.nodeManager.nodes.size) {
       console.log(`No Lavalink Connection Found, Please Connect First.`)
-      return bridge.call(values.ifError, values.ifErrorActions)
+      await bridge.call(values.ifError, values.ifErrorActions)
+      return
     }
 
     try {
@@ -99,7 +101,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(`[${this.data.name}] Lavalink Music Error`, error)
-      bridge.call(values.ifError, values.ifErrorActions)
+      await bridge.call(values.ifError, values.ifErrorActions)
     }
   },
 }
