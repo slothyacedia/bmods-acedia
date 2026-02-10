@@ -47,17 +47,18 @@ module.exports = {
       initPageDefaultData,
     )
 
-    switch (initPageData.environment.type) {
-      case "windows": {
-        let elementTab = document.getElementById("prepProjectQA")
-        try {
-          if (initPageData.downloadScripts == true) {
+    let elementTab = document.getElementById("prepProjectQA")
+    if (initPageData.downloadScripts == true) {
+      let scriptFilePath = path.join(projectFolder, "start.bat")
+      let persistScriptFilePath = path.join(projectFolder, "start_persist.bat")
+      switch (initPageData.environment.type) {
+        case "windows": {
+          try {
             console.log("Downloading Scripts")
             if (elementTab) {
               elementTab.innerHTML = "Prep (Downloading Scripts)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
             }
-            let scriptFilePath = path.join(projectFolder, "start.bat")
-            let persistScriptFilePath = path.join(projectFolder, "start_persist.bat")
 
             let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/start.bat`, { method: "GET" })
             let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/start_persist.bat`, { method: "GET" })
@@ -73,70 +74,153 @@ module.exports = {
               elementTab.innerHTML = "Prep (Downloaded Scripts)"
               await new Promise((resolve) => setTimeout(resolve, 250))
             }
-          }
-
-          if (elementTab) {
-            elementTab.innerHTML = "Prep (Checking For storedData.json)"
-            await new Promise((resolve) => setTimeout(resolve, 250))
-          }
-          let storedDataPath = path.join(projectFolder, "AppData", "Toolkit", "storedData.json")
-          if (!fs.existsSync(storedDataPath)) {
-            console.log("Creating Default storedData.json")
-            if (elementTab) {
-              elementTab.innerHTML = "Prep (Writing storedData.json)"
-              await new Promise((resolve) => setTimeout(resolve, 250))
-            }
-            let defaultStoredData = {
-              users: {},
-              guilds: {},
-              members: {},
-              channels: {},
-              lists: {},
-              roles: {},
-            }
-            fs.writeFileSync(storedDataPath, JSON.stringify(defaultStoredData))
-          }
-
-          let currentDir = process.cwd()
-          if (initPageData.syncActions == true) {
-            if (elementTab) {
-              elementTab.innerHTML = "Prep (Syncing Actions)"
-              await new Promise((resolve) => setTimeout(resolve, 250))
-            }
-            console.log("Syncing Actions")
-            let actionsSrc = path.join(currentDir, "AppData", "Actions")
-            let actionsDes = path.join(projectFolder, "AppData", "Actions")
-            fs.rmSync(actionsDes, { recursive: true, force: true })
-            fs.cpSync(actionsSrc, actionsDes, { recursive: true, force: true, errorOnExist: false })
+          } catch (err) {
             try {
-              options.burstInform(`✅ Actions Folder Synced`)
+              options.burstInform(`⚠️ Something Went Wrong...`)
             } catch {}
-          }
-
-          if (initPageData.syncEvents == true) {
             if (elementTab) {
-              elementTab.innerHTML = "Prep (Syncing Events)"
+              elementTab.innerHTML = "Prep (Something Went Wrong...)"
               await new Promise((resolve) => setTimeout(resolve, 250))
             }
-            console.log("Syncing Events")
-            let eventsSrc = path.join(currentDir, "AppData", "Events")
-            let eventsDes = path.join(projectFolder, "AppData", "Events")
-            fs.rmSync(eventsDes, { recursive: true, force: true })
-            fs.cpSync(eventsSrc, eventsDes, { recursive: true, force: true, errorOnExist: false })
+          }
+          break
+        }
+
+        case "linux": {
+          try {
+            console.log("Downloading Scripts")
+            if (elementTab) {
+              elementTab.innerHTML = "Prep (Downloading Scripts)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
+            }
+
+            let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/linux/start.bat`, { method: "GET" })
+            let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/linux/start_persist.bat`, {
+              method: "GET",
+            })
+            let startScriptText = await startScript.text()
+            let persistScriptText = await startPersistScript.text()
+
+            fs.writeFileSync(scriptFilePath, startScriptText)
+            fs.writeFileSync(persistScriptFilePath, persistScriptText)
+            fs.chmodSync(scriptFilePath, 0o755)
+            fs.chmodSync(persistScriptFilePath, 0o755)
             try {
-              options.burstInform(`✅ Events Folder Synced`)
+              options.burstInform(`✅ Start Scripts Downloaded`)
             } catch {}
+            if (elementTab) {
+              elementTab.innerHTML = "Prep (Downloaded Scripts)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
+            }
+          } catch (err) {
+            try {
+              options.burstInform(`⚠️ Something Went Wrong...`)
+            } catch {}
+            if (elementTab) {
+              elementTab.innerHTML = "Prep (Something Went Wrong...)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
+            }
           }
-          if (elementTab) {
-            elementTab.innerHTML = "Prep (Complete)"
-            setTimeout(() => {
-              elementTab.innerHTML = "Prep"
-            }, 500)
+          break
+        }
+
+        case "macos": {
+          try {
+            console.log("Downloading Scripts")
+            if (elementTab) {
+              elementTab.innerHTML = "Prep (Downloading Scripts)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
+            }
+
+            let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/mac/start.bat`, { method: "GET" })
+            let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/mac/start_persist.bat`, {
+              method: "GET",
+            })
+            let startScriptText = await startScript.text()
+            let persistScriptText = await startPersistScript.text()
+
+            fs.writeFileSync(scriptFilePath, startScriptText)
+            fs.writeFileSync(persistScriptFilePath, persistScriptText)
+            fs.chmodSync(scriptFilePath, 0o755)
+            fs.chmodSync(persistScriptFilePath, 0o755)
+            try {
+              options.burstInform(`✅ Start Scripts Downloaded`)
+            } catch {}
+            if (elementTab) {
+              elementTab.innerHTML = "Prep (Downloaded Scripts)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
+            }
+          } catch (err) {
+            try {
+              options.burstInform(`⚠️ Something Went Wrong...`)
+            } catch {}
+            if (elementTab) {
+              elementTab.innerHTML = "Prep (Something Went Wrong...)"
+              await new Promise((resolve) => setTimeout(resolve, 250))
+            }
           }
-        } catch (err) {
-          console.log(err)
+          break
         }
       }
+    }
+
+    if (elementTab) {
+      elementTab.innerHTML = "Prep (Checking For storedData.json)"
+      await new Promise((resolve) => setTimeout(resolve, 250))
+    }
+    let storedDataPath = path.join(projectFolder, "AppData", "Toolkit", "storedData.json")
+    if (!fs.existsSync(storedDataPath)) {
+      console.log("Creating Default storedData.json")
+      if (elementTab) {
+        elementTab.innerHTML = "Prep (Writing storedData.json)"
+        await new Promise((resolve) => setTimeout(resolve, 250))
+      }
+      let defaultStoredData = {
+        users: {},
+        guilds: {},
+        members: {},
+        channels: {},
+        lists: {},
+        roles: {},
+      }
+      fs.writeFileSync(storedDataPath, JSON.stringify(defaultStoredData))
+    }
+
+    let currentDir = process.cwd()
+    if (initPageData.syncActions == true) {
+      if (elementTab) {
+        elementTab.innerHTML = "Prep (Syncing Actions)"
+        await new Promise((resolve) => setTimeout(resolve, 250))
+      }
+      console.log("Syncing Actions")
+      let actionsSrc = path.join(currentDir, "AppData", "Actions")
+      let actionsDes = path.join(projectFolder, "AppData", "Actions")
+      fs.rmSync(actionsDes, { recursive: true, force: true })
+      fs.cpSync(actionsSrc, actionsDes, { recursive: true, force: true, errorOnExist: false })
+      try {
+        options.burstInform(`✅ Actions Folder Synced`)
+      } catch {}
+    }
+
+    if (initPageData.syncEvents == true) {
+      if (elementTab) {
+        elementTab.innerHTML = "Prep (Syncing Events)"
+        await new Promise((resolve) => setTimeout(resolve, 250))
+      }
+      console.log("Syncing Events")
+      let eventsSrc = path.join(currentDir, "AppData", "Events")
+      let eventsDes = path.join(projectFolder, "AppData", "Events")
+      fs.rmSync(eventsDes, { recursive: true, force: true })
+      fs.cpSync(eventsSrc, eventsDes, { recursive: true, force: true, errorOnExist: false })
+      try {
+        options.burstInform(`✅ Events Folder Synced`)
+      } catch {}
+    }
+    if (elementTab) {
+      elementTab.innerHTML = "Prep (Complete)"
+      setTimeout(() => {
+        elementTab.innerHTML = "Prep"
+      }, 500)
     }
   },
 }
