@@ -1,4 +1,4 @@
-modVersion = "v1.0.0"
+modVersion = "v1.1.0"
 module.exports = {
   run: async (options) => {
     const fs = require("node:fs")
@@ -24,6 +24,8 @@ module.exports = {
           name: "Hosting Environment",
           choices: {
             windows: { name: "Windows", field: false },
+            linux: { name: "Linux", field: false },
+            macos: { name: "macOS", field: false },
           },
         },
         "_",
@@ -49,8 +51,6 @@ module.exports = {
 
     let elementTab = document.getElementById("prepProjectQA")
     if (initPageData.downloadScripts == true) {
-      let scriptFilePath = path.join(projectFolder, "start.bat")
-      let persistScriptFilePath = path.join(projectFolder, "start_persist.bat")
       switch (initPageData.environment.type) {
         case "windows": {
           try {
@@ -59,6 +59,8 @@ module.exports = {
               elementTab.innerHTML = "Prep (Downloading Scripts)"
               await new Promise((resolve) => setTimeout(resolve, 250))
             }
+            let scriptFilePath = path.join(projectFolder, "start.bat")
+            let persistScriptFilePath = path.join(projectFolder, "start_persist.bat")
 
             let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/start.bat`, { method: "GET" })
             let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/start_persist.bat`, { method: "GET" })
@@ -94,8 +96,11 @@ module.exports = {
               await new Promise((resolve) => setTimeout(resolve, 250))
             }
 
-            let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/linux/start.bat`, { method: "GET" })
-            let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/linux/start_persist.bat`, {
+            let scriptFilePath = path.join(projectFolder, "start.sh")
+            let persistScriptFilePath = path.join(projectFolder, "start_persist.sh")
+
+            let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/linux/start.sh`, { method: "GET" })
+            let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/linux/start_persist.sh`, {
               method: "GET",
             })
             let startScriptText = await startScript.text()
@@ -132,8 +137,11 @@ module.exports = {
               await new Promise((resolve) => setTimeout(resolve, 250))
             }
 
-            let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/mac/start.bat`, { method: "GET" })
-            let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/mac/start_persist.bat`, {
+            let scriptFilePath = path.join(projectFolder, "start.command")
+            let persistScriptFilePath = path.join(projectFolder, "start_persist.command")
+
+            let startScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/mac/start.sh`, { method: "GET" })
+            let startPersistScript = await fetch(`https://github.com/slothyace/bmods-ace/raw/refs/heads/main/Scripts/prep/mac/start_persist.sh`, {
               method: "GET",
             })
             let startScriptText = await startScript.text()
