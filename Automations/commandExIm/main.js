@@ -179,7 +179,7 @@ module.exports = {
             element: "text",
             text: `<div style="text-align: center">
             Enabling "Zip It" Will Make Create A Zip File Of The Exported Commands<br>
-            "Inverse Selection" Will Export Those Not Selected
+            Enabling "Inverse Selection" Will Export Those Not Selected
             </div>
             `,
           },
