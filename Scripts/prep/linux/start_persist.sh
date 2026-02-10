@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR"
+
 # -----------------------
 # Variables
 # -----------------------
@@ -91,9 +94,9 @@ fi
 # -----------------------
 echo "Checking For Modules..."
 if [[ -d "node_modules" ]]; then
-  echo "Node_Modules Folder Exists, Skipping Module Installation..."
+  echo "node_modules Folder Exists, Skipping Module Installation..."
 else
-  echo "Node_Modules Folder Not Found, Running Additional Checks..."
+  echo "node_modules Folder Not Found, Running Additional Checks..."
   if [[ -f "package.json" ]]; then
     echo "Package.json Found, Installing Modules..."
     echo
