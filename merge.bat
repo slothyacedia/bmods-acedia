@@ -1,3 +1,5 @@
+@echo off
+
 xcopy /y "Fixes" "./Actions"
 xcopy /y "Tweaks" "./Actions"
 echo Merging Done.
