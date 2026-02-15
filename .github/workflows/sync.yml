@@ -30,7 +30,6 @@ jobs:
             --exclude 'z.Extras/' \
             --exclude 'z.WIPs/' \
             --exclude '.gitattributes' \
-            --exclude 'merge.bat' \
             --exclude 'mergeExtras.bat' \
             --exclude 'README.md' \
             /tmp/ace-bmods/ ./
@@ -39,7 +38,7 @@ jobs:
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then
             git config user.name "github-actions"
-            git config user.email "github-actions@github.com"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
 
             MSG="${{ github.event.client_payload.commit_message }}"
             MSG="${MSG:-Sync from ace-bmods}"
@@ -50,7 +49,3 @@ jobs:
           else
             echo "No changes to sync"
           fi
-
-
-
-
