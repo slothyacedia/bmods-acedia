@@ -44,7 +44,7 @@ module.exports = {
 
   subtitle: (values, constants, thisAction) => {
     // To use thisAction, constants must also be present
-    return `Check If Member ${values.member.type}(${values.member.value}) Is In ${values.guild.type}(${values.guild.value})`
+    return `Check If Member ${constants.user(values.member)} Is In ${constants.guild(values.guild)} Server`
   },
 
   compatibility: ["Any"],
