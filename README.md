@@ -1,8 +1,9 @@
 # bmods-ace
 
-A dedicated private repository for my modded actions for [BMD](https://store.steampowered.com/app/2592170/Bot_Maker_For_Discord/).
+A dedicated private repository for my modded actions for [BMD](https://store.steampowered.com/app/2592170/Bot_Maker_For_Discord/)
 
-Note: This Repo Is Auto Managed By GitHub Actions, It Ports Certain Folders From A Private Development Repo.
+[!NOTE]
+Note: This Repo Is Auto Managed By GitHub Actions, It Ports Certain Folders From A Private Development Repo
 
 ## Contains
 
@@ -11,23 +12,27 @@ Note: This Repo Is Auto Managed By GitHub Actions, It Ports Certain Folders From
 3. Automations
 4. Fixes For Some Of The Base Actions
 
-## Installation
+<!-- ## Installation
 
-<video src="https://github.com/user-attachments/assets/f4bba707-1b83-418a-a1b3-5666c742801d">Watch the installation guide on [YouTube](https://youtube.com/watch?v=qTTGdbSt9yg)</video>
+<video src="https://github.com/user-attachments/assets/f4bba707-1b83-418a-a1b3-5666c742801d">Watch the installation guide on [YouTube](https://youtube.com/watch?v=qTTGdbSt9yg)</video> -->
 
-## Worded Installation Guide
+## Manual Installation Guide
 
-1. Download the [repo](https://github.com/slothyace/bmods-ace/archive/refs/heads/main.zip).
-2. Extract the zip.
-3. Open your bmd install location and open the `AppData` folder.
-4. On Windows, you can run the `merge.bat` file to merge the folders as intended.
-5. Drag & drop the `Actions` and `Events` folders into the `AppData` folder of your bmd install.
-6. Restart bmd.
-7. Enjoy the mods.
+1. Download the [repo](https://github.com/slothyace/bmods-ace/archive/refs/heads/main.zip)
+2. Extract the zip
+3. Open your BMD install location and open the `AppData` folder
+4. Drag & drop the `Actions` and `Events` folders into the `AppData` folder of your bmd install
+5. Restart / launch BMD
+
+## Automated Installation Guide
+
+1. Download [bmodsInstaller.bat](https://github.com/slothyace/bmods-ace/blob/main/Scripts/bmodsInstaller.bat)
+2. Double click on `bmodsInstaller.bat`
+3. Restart / launch BMD
 
 ## Mod Versions
 
-All mods that is owned by me will have a mod version tag attached to it at the bottom.
+All mods that is owned by me will have a mod version tag attached to it at the bottom
 
 ## Like the stuff I make? Support Me!
 
