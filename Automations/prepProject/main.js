@@ -195,9 +195,8 @@ module.exports = {
 
     if (elementTab) {
       elementTab.innerHTML = "Prep (Complete)"
-      setTimeout(() => {
-        elementTab.innerHTML = "Prep"
-      }, 350)
+      await new Promise((resolve) => setTimeout(resolve, 350))
+      elementTab.innerHTML = "Prep"
     }
   },
 }
