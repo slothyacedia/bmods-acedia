@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR"
+scriptDir="$(cd "$(dirname "$0")" && pwd)"
+cd "$scriptDir"
 
 # -----------------------
 # Variables
@@ -83,14 +83,14 @@ if [[ -d "node_modules" ]]; then
 else
   echo "node_modules Folder Not Found, Running Additional Checks..."
   if [[ -f "package.json" ]]; then
-    echo "Package.json Found, Installing Modules..."
+    echo "package.json Found, Installing Modules..."
     echo
     npm install
     echo
     echo "Modules Installed. Restarting Script..."
     exec "$0" "$@"
   else
-    echo "Package.json Not Found, Skipping Module Installation..."
+    echo "package.json Not Found, Skipping Module Installation..."
   fi
 fi
 echo
@@ -108,21 +108,21 @@ else
 fi
 echo
 
-echo "All Checks Passed, Starting Bot.js..."
+echo "All Checks Passed, Starting bot.js..."
 
 restartBot() {
   node bot.js
   exitCode=$?
 
   if [[ "$exitCode" -ne 0 ]]; then
-    echo "Bot.js Exited With An Error..."
+    echo "bot.js Exited With An Error..."
   else
-    echo "Bot.js Exited Without An Error..."
+    echo "bot.js Exited Without An Error..."
   fi
 
   if [[ "$persist" -eq 1 ]]; then
     echo
-    echo "Restarting Bot.js..."
+    echo "Restarting bot.js..."
     restartBot
   fi
 }
