@@ -55,7 +55,7 @@ module.exports = {
 
   subtitle: (values, constants, thisAction) => {
     // To use thisAction, constants must also be present
-    return `Fuzzy Search For ${values.query} In Data ${constants.variable(values.data)}`
+    return `Fuzzy Search For ${values.query} In Data ${constants.variable(values.list)}`
   },
 
   compatibility: ["Any"],
