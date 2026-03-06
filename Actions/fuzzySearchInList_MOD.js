@@ -1,7 +1,7 @@
 modVersion = "v1.0.0"
 module.exports = {
   data: {
-    name: "Fuzzy Search In Data",
+    name: "Fuzzy Search In List",
   },
   aliases: [],
   modules: [],
@@ -55,7 +55,7 @@ module.exports = {
 
   subtitle: (values, constants, thisAction) => {
     // To use thisAction, constants must also be present
-    return `Fuzzy Search For ${values.query} In Data ${constants.variable(values.list)}`
+    return `Fuzzy Search For ${values.query} In List ${constants.variable(values.list)}`
   },
 
   compatibility: ["Any"],
