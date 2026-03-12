@@ -18,7 +18,7 @@ jobs:
 
       - name: Clone source repo
         run: |
-          git clone https://x-access-token:${{ secrets.SYNCTOKEN }}@github.com/slothyace/ace-bmods.git /tmp/ace-bmods
+          git clone https://x-access-token:${{ secrets.SYNCTOKEN }}@github.com/slothyacedia/ace-bmods.git /tmp/ace-bmods
 
       - name: Sync files (with exclusions)
         run: |
