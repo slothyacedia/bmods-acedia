@@ -1,4 +1,4 @@
-modVersion = "v1.2.0"
+modVersion = "v1.2.1"
 module.exports = {
   data: {
     name: "Lavalink Multi Connection",
@@ -20,7 +20,7 @@ module.exports = {
       max: 50,
       UItypes: {
         node: {
-          data: {},
+          data: { enabled: true },
           name: "Node",
           preview: "`${option.data.host||''}:${option.data.port||''} (${option.data.nodeName||''})`",
           UI: [
