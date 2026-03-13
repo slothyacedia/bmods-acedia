@@ -9,6 +9,7 @@ set "git=0"
 set "winget=0"
 set "needInstalls=0"
 set "relaunchNeeded=0"
+set "logging=0"
 set "persist=1"
 
 echo Running Checks...
@@ -133,6 +134,9 @@ cls
 for %%A in (%*) do (
     if /I "%%A"=="-persist" set "persist=1"
     if /I "%%A"=="-p" set "persist=1"
+
+    if /I "%%A"=="-logging" set "logging=1"
+    if /I "%%A"=="-l" set "logging=1"
 )
 
 if %persist% equ 1 (
@@ -141,11 +145,25 @@ if %persist% equ 1 (
     echo Persist Disabled...
     echo To Enable Persist, Start The Script With A -p Argument...
 )
+if %logging% equ 1 (
+    echo Logging To File Enabled...
+) else (
+    echo Logging To File Disabled...
+    echo To Enable Logging To File, Start The Script With A -l Argument...
+)
 echo.
 
 echo All Checks Passed, Starting bot.js...
 :restartBot
-node bot.js
+
+if %logging% equ 1 (
+  if not exist logs mkdir logs
+  for /f %%A in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd_HH-mm-ss"') do set "logStart=%%A"
+  set "logFile=logs\!logStart!.log"
+  powershell -Command "node bot.js | Tee-Object -FilePath '!logFile!' -Append"
+) else (
+  powershell -Command "node bot.js"
+)
 
 if !ERRORLEVEL! neq 0 (
     echo bot.js Exited With An Error...

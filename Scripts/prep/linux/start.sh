@@ -11,6 +11,7 @@ node=0
 git=0
 needInstalls=0
 persist=0
+logging=0
 
 echo "Running Checks..."
 echo
@@ -126,8 +127,11 @@ echo
 echo "All Checks Passed, Starting bot.js..."
 
 restartBot() {
-  node bot.js
-  exitCode=$?
+  mkdir -p logs
+  logFile="logs/$(date '+%Y-%m-%d_%H-%M-%S').log"
+
+  node bot.js 2>&1 | tee -a "$logFile"
+  exitCode=${PIPESTATUS[0]}
 
   if [[ "$exitCode" -ne 0 ]]; then
     echo "bot.js Exited With An Error..."
