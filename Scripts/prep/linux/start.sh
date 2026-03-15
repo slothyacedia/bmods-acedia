@@ -3,6 +3,7 @@ set -euo pipefail
 
 scriptDir="$(cd "$(dirname "$0")" && pwd)"
 cd "$scriptDir"
+printf "\033]0;%s\007" "$scriptDir"
 
 # -----------------------
 # Variables

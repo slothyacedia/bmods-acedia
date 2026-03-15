@@ -1,5 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
+title %~dp0
 
 :: -----------------------
 :: Variables
