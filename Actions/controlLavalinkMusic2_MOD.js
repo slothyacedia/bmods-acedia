@@ -12,7 +12,7 @@ const indexByStoreAs = (values, storeAs) => {
 }
 module.exports = {
   data: {
-    name: "Control Lavalink Music 2",
+    name: "Control Lavalink Music v2",
   },
   aliases: [],
   modules: ["lavalink-client"],
