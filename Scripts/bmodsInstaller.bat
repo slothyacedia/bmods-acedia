@@ -10,7 +10,7 @@ set "extractedDir=bmods-master"
 set "wget=0"
 set "winget=0"
 
-echo Starting bmods Installer...
+echo Starting bmods Installer v1.1...
 echo Detecting Steam Installation...
 
 REM === Get Steam install path from registry ===
@@ -58,51 +58,12 @@ pause
 exit /b 1
 
 :found
-echo Checking For wget...
-wget --version >nul 2>&1
-if !ERRORLEVEL! equ 0 (
-  echo wget Detected
-  set "wget=1"
-) else (
-  echo wget Missing
-  set "wget=0"
-)
-
-if !wget! equ 0 (
-  echo Checking For winget...
-  winget -v >nul 2>&1
-  if !ERRORLEVEL! equ 0 (
-      echo winget Detected, Installing Missing Packages...
-      set "winget=1"
-      echo.
-  ) else (
-      echo winget Not Found...
-      echo Please Install The Microsoft App Installer From The Store:
-      echo https://aka.ms/getwinget
-      echo Or Download Manually From GitHub:
-      echo https://github.com/microsoft/winget-cli/releases
-      pause
-      exit /b 1
-  )
-
-  if !winget! equ 1 (
-    echo Installing wget...
-    winget install JernejSimoncic.Wget --accept-package-agreements --accept-source-agreements
-    echo wget Installed
-  )
-
-  echo Installations Complete, Relaunching Script In New CMD Window...
-  timeout /t 1 /nobreak >nul
-  start "" cmd /c "%~f0"
-  exit /b 0
-)
-
 echo Installing bmods To: "%installDir%"
 timeout /t 1 >nul
 
 REM === Download and extract bmods ===
 echo Downloading bmods zip...
-wget -O "%zipName%" https://github.com/RatWasHere/bmods/archive/refs/heads/master.zip
+powershell -Command "Invoke-WebRequest -Uri 'https://github.com/RatWasHere/bmods/archive/refs/heads/master.zip' -OutFile '%zipName%'"
 if errorlevel 1 (
     echo ERROR: Failed To Download bmods.
     pause
@@ -110,7 +71,7 @@ if errorlevel 1 (
 )
 
 echo Extracting bmods...
-tar -xf "%zipName%"
+powershell -Command "Expand-Archive -Path '%zipName%' -DestinationPath . -Force"
 if errorlevel 1 (
     echo ERROR: Failed To Extract bmods.
     pause
