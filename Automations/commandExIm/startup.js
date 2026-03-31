@@ -60,17 +60,22 @@ module.exports = {
       })
 
       commandBar.addEventListener("drop", async (event) => {
+        event.preventDefault()
         if (event.dataTransfer.files.length == 0) {
           return
         }
         let dataJSONPath = path.join(process.cwd(), "AppData", "data.json")
+        let preferenceFilePath = path.join(process.cwd(), "Automations", "commandExIm", "preferences.json")
         let botData = JSON.parse(fs.readFileSync(dataJSONPath))
         let commands = botData.commands
-        event.preventDefault()
         commandBar.style.borderColor = originalClr
         let files = Array.from(event.dataTransfer.files)
         let importCount = 0
         let jsonFiles = files.filter((f) => f.name.toLowerCase().endsWith(".json"))
+
+        if (jsonFiles.length < 1) {
+          return
+        }
 
         await Promise.all(
           jsonFiles.map(async (file) => {
@@ -81,10 +86,10 @@ module.exports = {
                 commands.push(commandJSON)
                 importCount++
               } else {
-                console.log(`Invalid Command JSON in ${file.name}`)
+                console.log(`Invalid Command JSON In ${file.name}`)
               }
             } catch (err) {
-              console.log(`Failed to parse ${file.name}:`, err)
+              console.log(`Failed To Parse ${file.name}:`, err)
             }
           }),
         )
@@ -92,9 +97,30 @@ module.exports = {
         fs.writeFileSync(dataJSONPath, JSON.stringify(botData, null, 2), "utf8")
 
         if (importCount > 0) {
+          if (!fs.existsSync(preferenceFilePath)) {
+            fs.mkdirSync(path.dirname(preferenceFilePath), { recursive: true })
+            let defaultDataStructure = {
+              export: "",
+              importDnD: 0,
+            }
+            fs.writeFileSync(preferenceFilePath, JSON.stringify(defaultDataStructure, null, 2))
+          }
+          let preferencesRaw = fs.readFileSync(preferenceFilePath)
+          let preferences = JSON.parse(preferencesRaw)
+          preferences.importDnD = (Number(preferences.importDnD) || 0) + importCount
+          fs.writeFileSync(preferenceFilePath, JSON.stringify(preferences, null, 2))
+
+          // if (preferences.importDnD > 10 && !preferences.disableDnDMsg) {
+          //   try {
+          //     options.result(titleCase(`👋 If you like this drag and drop import feature, please support me @\nhttps://ko-fi.com/slothyacedia`))
+          //   } catch {}
+          //   await new Promise((resolve) => setTimeout(resolve, 1000))
+          // }
+
           try {
-            options.result(titleCase(`✅ ${importCount} Command(s) Imported Successfully, Reloading...`))
+            options.result(titleCase(`✅ ${importCount} Command${importCount > 1 ? "s" : ""} Imported Successfully, Reloading...`))
           } catch {}
+
           setTimeout(() => location.reload(), 1000)
         } else {
           try {
