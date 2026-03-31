@@ -7,7 +7,7 @@ const modMan = {
         require("child_process").execSync(`npm i ${version ? `${moduleName}@${version}` : moduleName}`)
         return resolve(require(moduleName))
       } catch (error) {
-        return console.log(`The required module '${version ? `${moduleName}@${version}` : moduleName}' has been installed. Please restart your bot.`)
+        return console.log(`The required module "${version ? `${moduleName}@${version}` : moduleName}" has been installed. Please restart your bot.`)
       }
     })
   },
@@ -150,9 +150,9 @@ module.exports = {
             element: "html",
             html: `
             <button
-              style='width: var(--width-in-editor); margin-left: auto; margin-right: auto'
-              class='hoverablez flexbox'
-              onclick='
+              style="width: var(--width-in-editor); margin-left: auto; margin-right: auto"
+              class="hoverablez flexbox"
+              onclick="
                 let inputPath = awaitIPCResponse({channel: 'saveDialog'}, 'saveDialogResult').then(path => {
                   let inputPath = path[0]
                   let inputArea = document.getElementById('exportPath')
@@ -162,9 +162,9 @@ module.exports = {
                   }
                   inputArea.value = inputPath
                   inputArea.focus()
-                })'
+                })"
             >
-              <btext id='buttonText'> Choose Export Path </btext>
+              <btext id="buttonText"> Choose Export Path </btext>
             </button>
             `,
           },
@@ -177,9 +177,9 @@ module.exports = {
           "-",
           {
             element: "text",
-            text: `<div style='text-align: center'>
-            Enabling 'Zip It' Will Make Create A Zip File Of The Exported Commands<br>
-            Enabling 'Inverse Selection' Will Export Those Not Selected
+            text: `<div style="text-align: center">
+            Enabling "Zip It" Will Make Create A Zip File Of The Exported Commands<br>
+            Enabling "Inverse Selection" Will Export Those Not Selected
             </div>
             `,
           },
@@ -360,8 +360,8 @@ module.exports = {
             element: "html",
             html: `
             <div
-            id='dropArea'
-            style='width: var(--width-in-editor);
+            id="dropArea"
+            style="width: var(--width-in-editor);
             height: 60px;
             margin-left: auto;
             margin-right: auto;
@@ -373,19 +373,17 @@ module.exports = {
             justify-content: center;
             transition:
             border-color 0.2s;
-            box-sizing: border-box'
-            class='hoverablez noanims'
-            ondragover='event.preventDefault(); this.style.borderColor='#00b4d8';'
-            ondragleave='this.style.borderColor='#555';'
-            ondrop='
+            box-sizing: border-box"
+            class="hoverablez noanims"
+            ondragover="event.preventDefault(); this.style.borderColor='#00b4d8';"
+            ondragleave="this.style.borderColor='#555';"
+            ondrop="
               event.preventDefault();
               this.style.borderColor='#555';
               let files = event.dataTransfer.files;
               let dropArea = this
               let dropText = dropArea.querySelector('#dropText')
               let consoleArea = document.getElementById('console')
-              const fs = require('fs')
-              const path = require('path')
 
               function logToConsole(msg, color){
                 let line = document.createElement('div')
@@ -393,30 +391,6 @@ module.exports = {
                 line.textContent = msg
                 consoleArea.appendChild(line)
                 consoleArea.scrollTop = consoleArea.scrollHeight
-              }
-
-              let validateCmdJSON = (commandJSON) => {
-                if (typeof commandJSON.name != 'string') {
-                  return false
-                }
-
-                if (typeof commandJSON.type != 'string') {
-                  return false
-                }
-
-                if (typeof commandJSON.trigger != 'string') {
-                  return false
-                }
-
-                if (!Array.isArray(commandJSON.actions)) {
-                  return false
-                }
-
-                if (typeof commandJSON.customId != 'number') {
-                  return false
-                }
-
-                return true
               }
 
               for (let file of files){
@@ -429,7 +403,9 @@ module.exports = {
                 file.text().then(fileContent => {
                   try {
                     commandJSON = JSON.parse(fileContent)
-                    if (validateCmdJSON(commandJSON) == true){
+                    if (commandJSON.name && commandJSON.type && commandJSON.trigger && commandJSON.actions && commandJSON.customId){
+                      const fs = require('fs')
+                      const path = require('path')
                       let tempImportDir = path.join(process.cwd(), 'Automations', 'commandExIm', 'importCache')
                       let fileName = (commandJSON.name + '_' + commandJSON.type + Date.now()).replace(/[^\\w\\-]+/g, '_') + '.json'
                       let importFilePath = path.join(tempImportDir, fileName)
@@ -441,9 +417,9 @@ module.exports = {
                   } catch {logToConsole('Invalid File (Invalid Command Structure): ' + file.name, '#ff0000')}
                 })
               }
-            '
+            "
           >
-            <span id='dropText'>Drop JSON File(s) Here</span>
+            <span id="dropText">Drop JSON File(s) Here</span>
           </div>
             `,
           },
@@ -458,9 +434,9 @@ module.exports = {
             element: "html",
             html: `
           <div
-            id='console'
-            class='noanims hoverablez'
-            style='width: var(--width-in-editor);
+            id="console"
+            class="noanims hoverablez"
+            style="width: var(--width-in-editor);
             height: 150px;
             margin-left: auto;
             margin-right: auto;
@@ -469,7 +445,7 @@ module.exports = {
             overflow-y: auto;
             padding: 4px;
             box-sizing: border-box;
-            border: 1px solid #555;'
+            border: 1px solid #555;"
           >
             <div style='color:#979797;'>Logs</div>
           </div>
@@ -478,7 +454,7 @@ module.exports = {
         ]
 
         resultData = await options.showInterface(importUI, defaultData)
-        let resultDataPath = resultData.path.replaceAll(`'`, "").replaceAll(`'`, "")
+        let resultDataPath = resultData.path.replaceAll(`"`, "").replaceAll(`'`, "")
         let generateBackup = resultData.generateBackup
         let commandsMerged = 0
 
