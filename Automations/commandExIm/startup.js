@@ -2,54 +2,61 @@ module.exports = {
   run: (options) => {
     const fs = require("node:fs")
     const path = require("node:path")
-    const { dialog, shell } = require("electron")
+    const { shell } = require("electron")
 
     function showDonatePopup() {
       return new Promise((resolve) => {
         const overlay = document.createElement("div")
         overlay.style.cssText = `
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      z-index: 9999;
-    `
+          position: fixed;
+          top: 0; left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0,0,0,0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 999999;
+        `
 
         const modal = document.createElement("div")
         modal.style.cssText = `
-          position: fixed;
-          top: calc(50vh - 120px);
-          left: calc(50vw - 250px);
           background: #1e1e2e;
           color: #fff;
-          padding: 48px;
-          border-radius: 12px;
+          padding: 20px;
+          border-radius: 15px;
           width: 500px;
           text-align: center;
           box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-          z-index: 10000;
           font-family: sans-serif;
+          box-sizing: border-box;
         `
 
         modal.innerHTML = `
-          <h2 style="margin:0 0 8px">❤️ Enjoy this drag and drop to import feature?</h2>
-          <p style="margin:0 0 24px; color:#aaa">Consider making a donation to support development!</p>
-          <div style="display:flex; gap:12px; justify-content:center">
-            <button id="noThanks" style="padding:10px 20px; border-radius:8px; border:1px solid #555;
-              background:transparent; color:#aaa; cursor:pointer; font-size:14px">
-              No Thanks
+          <h2 style="margin:0 0 12px; font-size:22px">❤️ Enjoy this drag and drop import feature?</h2>
+          <p style="margin:0 0 32px; color:#aaa; font-size:15px">Consider making a donation to support development!</p>
+          <div style="display:flex; gap:12px; padding: 0 8px">
+            <button id="noThanks" 
+              onmouseenter="this.style.background='rgba(255,255,255,0.05)'; this.style.borderColor='#888'; this.style.color='#fff'"
+              onmouseleave="this.style.background='transparent'; this.style.borderColor='#555'; this.style.color='#aaa'"
+              style="flex:1; padding:12px; border-radius:8px; border:1px solid #555;
+                background:transparent; color:#aaa; cursor:pointer; font-size:15px; transition: all 0.2s">
+              💔 No Thanks
             </button>
-            <button id="donateBtn" style="padding:10px 20px; border-radius:8px; border:none;
-              background:#5865f2; color:#fff; cursor:pointer; font-size:14px; font-weight:600">
+            <button id="donateBtn"
+              onmouseenter="this.style.background='#4752c4'"
+              onmouseleave="this.style.background='#5865f2'"
+              style="flex:1; padding:12px; border-radius:8px; border:none;
+                background:#5865f2; color:#fff; cursor:pointer; font-size:15px; font-weight:600; transition: all 0.2s">
               💖 Donate
             </button>
           </div>
         `
 
-        document.body.appendChild(overlay)
-        document.body.appendChild(modal)
+        overlay.appendChild(modal)
+        document.documentElement.appendChild(overlay)
 
-        const cleanup = () => {
-          overlay.remove()
-          modal.remove()
-        }
+        const cleanup = () => overlay.remove()
 
         document.getElementById("noThanks").onclick = () => {
           cleanup()
@@ -85,8 +92,6 @@ module.exports = {
 
       let commandBar = document.getElementById("commandbar")
 
-      let originalClr = commandBar.style.borderColor
-
       let validateCmdJSON = (commandJSON) => {
         if (typeof commandJSON.name != "string") {
           return false
@@ -113,12 +118,9 @@ module.exports = {
 
       commandBar.addEventListener("dragover", (event) => {
         event.preventDefault()
-        commandBar.style.borderColor = "#00b4d8"
       })
 
-      commandBar.addEventListener("dragleave", () => {
-        commandBar.style.borderColor = originalClr
-      })
+      commandBar.addEventListener("dragleave", () => {})
 
       commandBar.addEventListener("drop", async (event) => {
         event.preventDefault()
@@ -129,7 +131,6 @@ module.exports = {
         let preferenceFilePath = path.join(process.cwd(), "Automations", "commandExIm", "preferences.json")
         let botData = JSON.parse(fs.readFileSync(dataJSONPath))
         let commands = botData.commands
-        commandBar.style.borderColor = originalClr
         let files = Array.from(event.dataTransfer.files)
         let importCount = 0
         let jsonFiles = files.filter((f) => f.name.toLowerCase().endsWith(".json"))
